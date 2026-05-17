@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../../interfaces/auth-response.model';
-import { environment } from '../../../enviroment/environment';
 // Si el servicio está en una carpeta 'services', usa '../'
 // Si el servicio está suelto en 'app', usa './'
 
@@ -10,7 +9,7 @@ import { environment } from '../../../enviroment/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  private API_URL = process.env['API_URL'] || environment.API_URL;
+  private API_URL = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
