@@ -1,0 +1,74 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="icon">🏨</span>
+      <h3>{{ nombreHotel }}</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="javascript:void(0)" class="active">🏠 Inicio / Portal</a>
+      <a href="javascript:void(0)" (click)="irADashboard()">📊 Dashboard</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/gestion-pisos'])">🏢 Pisos y Habitaciones</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/perfil'])">👤 Mi Perfil</a>
+      <a href="javascript:void(0)">⚙️ Configuración</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="cambiarSede()" class="btn-back">
+        🔄 Cambiar de Sede
+      </button>
+
+      <button (click)="cerrarSesion()" class="btn-logout" style="margin-top: 10px; background: #dc3545; color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; cursor: pointer;">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="main-header">
+      <h1 class="header-title">Panel de Bienvenida: <span style="color: #007bff;">{{ nombreHotel }}</span></h1>
+      <div class="user-info">
+        <span>Hola, <strong>{{ nombreUsuario }}</strong></span>
+        <div class="avatar">{{ nombreUsuario.substring(0,1).toUpperCase() }}</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="welcome-card">
+        <div class="welcome-text">
+          <h2>Gestión de {{ nombreHotel }}</h2>
+          <p>Bienvenido {{ nombreUsuario }}. ¿Qué deseas supervisar hoy?</p>
+        </div>
+        <div class="welcome-img">🏨</div>
+      </div>
+
+      <h3 style="margin-bottom: 20px; color: #2c3e50;">Acciones Rápidas</h3>
+
+      <div class="quick-actions">
+        <div class="action-card info" (click)="irADashboard()" style="cursor: pointer;">
+          <div class="action-icon">📈</div>
+          <h4>Dashboard de Auditoría</h4>
+          <p>Revisar trazabilidad y tiempos de limpieza.</p>
+        </div>
+
+        <div class="action-card success" (click)="router.navigate(['/gestion-pisos'])" style="cursor: pointer;">
+          <div class="action-icon">🛏️</div>
+          <h4>Gestionar Habitaciones</h4>
+          <p>Ver estados, limpiar o asignar pisos.</p>
+        </div>
+
+        <div class="action-card primary" (click)="router.navigate(['/suscripcion'])" style="cursor: pointer; border-top: 5px solid #3498db;">
+          <div class="action-icon">➕</div>
+          <h4>Registrar Nueva Sede</h4>
+          <p>Añade otro hotel a tu cuenta.</p>
+        </div>
+
+        <div class="action-card" (click)="cambiarSede()" style="cursor: pointer; border-top: 5px solid #bdc3c7;">
+          <div class="action-icon">📋</div>
+          <h4>Mis Hoteles</h4>
+          <p>Ver el listado de todas tus sedes.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

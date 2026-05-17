@@ -1,0 +1,121 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="icon">🏨</span>
+      <h3>{{ nombreHotel }}</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="javascript:void(0)" (click)="router.navigate(['/portal'])">🏠 Inicio / Portal</a>
+      <a href="javascript:void(0)" class="active">📊 Dashboard</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/gestion-pisos'])">🏢 Pisos y Habitaciones</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/perfil'])">👤 Mi Perfil</a>
+      <a href="javascript:void(0)">⚙️ Configuración</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="cambiarSede()" class="btn-back">
+        🔄 Cambiar de Sede
+      </button>
+
+      <button (click)="cerrarSesion()" class="btn-logout" style="margin-top: 10px; background: #dc3545; color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; cursor: pointer;">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="main-header">
+      <h1 class="header-title">Panel de Auditoría: <span style="color: #007bff;">{{ nombreHotel }}</span></h1>
+      <div class="user-info">
+        <span>Hola, <strong>{{ nombreUsuario }}</strong></span>
+        <div class="avatar">{{ nombreUsuario.substring(0,1).toUpperCase() }}</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="welcome-card">
+        <div class="welcome-text">
+          <h2>Trazabilidad de la Sede</h2>
+          <p>Supervisa los cambios de estado en tiempo real y audita el rendimiento de tu personal.</p>
+        </div>
+        <div class="welcome-img">📊</div>
+      </div>
+
+      <h3 style="margin-bottom: 20px; color: #444;">Acciones Rápidas</h3>
+
+      <div class="quick-actions">
+        <div class="action-card success" (click)="router.navigate(['/gestion-pisos'])" style="cursor: pointer;">
+          <div class="action-icon">🛏️</div>
+          <h4>Gestionar Habitaciones</h4>
+          <p>Ir al panel de pisos para Check-In/Out.</p>
+        </div>
+
+        <div class="action-card info" (click)="cargarHistorial()" style="border-left: 5px solid #17a2b8; cursor: pointer;">
+          <div class="action-icon">🔄</div>
+          <h4>Actualizar Datos</h4>
+          <p>Refrescar la tabla de movimientos.</p>
+        </div>
+      </div>
+
+      <div class="traceability-section" style="margin-top: 40px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+          <h3 style="margin: 0; color: #444;">
+            <i class="fas fa-history"></i> Historial de Movimientos Recientes
+          </h3>
+
+          <div class="filter-box" style="display: flex; align-items: center; gap: 10px; background: white; padding: 5px 15px; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <i class="fas fa-filter" style="color: #007bff;"></i>
+            <label style="font-weight: 600; color: #555; font-size: 0.9rem;">Habitación:</label>
+            <select [(ngModel)]="idHabitacionSeleccionada"
+                    style="border: none; outline: none; background: transparent; cursor: pointer; color: #333; font-weight: 500;">
+              <option value="">✨ Mostrar Todas</option>
+              <option *ngFor="let hab of habitaciones" [value]="hab.id">
+                🚪 Habitación {{ hab.numero }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container" style="background: white; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+            <thead style="background: #f8f9fa; border-bottom: 2px solid #eee;">
+            <tr>
+              <th style="padding: 15px; text-align: left;">ID / Nro</th>
+              <th style="padding: 15px; text-align: left;">Estado Anterior</th>
+              <th style="padding: 15px; text-align: left;">Nuevo Estado</th>
+              <th style="padding: 15px; text-align: left;">Encargado</th>
+              <th style="padding: 15px; text-align: left;">Fecha y Hora</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reg of historialFiltrado" style="border-bottom: 1px solid #f1f1f1;">
+              <td style="padding: 15px;"><strong>Hab. #{{ reg.habitacionId }}</strong></td>
+              <td style="padding: 15px;">
+                <span class="status-pill" [ngClass]="reg.estadoAnterior">{{ reg.estadoAnterior || 'INICIO' }}</span>
+              </td>
+              <td style="padding: 15px;">
+                <span class="status-pill" [ngClass]="reg.estadoNuevo">{{ reg.estadoNuevo }}</span>
+              </td>
+              <td style="padding: 15px; color: #555;">
+                <i class="fas fa-user-circle"></i> {{ reg.usuarioEncargado || 'Sistema' }}
+              </td>
+              <td style="padding: 15px; color: #888; font-size: 0.9rem;">
+                {{ reg.fechaHora | date:'dd/MM/yyyy, hh:mm a' }}
+              </td>
+            </tr>
+
+            <tr *ngIf="historialFiltrado.length === 0">
+              <td colspan="5" style="padding: 30px; text-align: center; color: #999;">
+                <i class="fas fa-search" style="display: block; font-size: 1.5rem; margin-bottom: 10px; opacity: 0.5;"></i>
+                No se encontraron movimientos para esta habitación.
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

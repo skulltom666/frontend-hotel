@@ -1,0 +1,26 @@
+<div class="auth-bg">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>🏢 Sistema Hotelero</h2>
+      <p>Bienvenido de nuevo. Ingresa a tu cuenta.</p>
+    </div>
+
+    <form (ngSubmit)="iniciarSesion()">
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" [(ngModel)]="credenciales.email" placeholder="ejemplo@correo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="password" [(ngModel)]="credenciales.password" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Ingresar al Sistema</button>
+
+      <div class="auth-footer">
+        <p>¿No tienes cuenta? <a href="javascript:void(0)" (click)="router.navigate(['/registro'])">Regístrate aquí</a></p>
+      </div>
+    </form>
+  </div>
+</div>

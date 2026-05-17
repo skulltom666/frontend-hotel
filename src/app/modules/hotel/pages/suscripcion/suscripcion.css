@@ -1,0 +1,143 @@
+.subs-container {
+  padding: 40px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Grilla de Planes */
+.planes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.plan-card {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.plan-card:hover { transform: translateY(-5px); border-color: #007bff; }
+.plan-card.selected { border-color: #007bff; background: #f0f7ff; box-shadow: 0 10px 20px rgba(0,123,255,0.1); }
+
+.plan-card h3 { color: #007bff; font-size: 24px; margin-bottom: 10px; }
+.price { font-size: 32px; font-weight: bold; margin-bottom: 20px; }
+.price span { font-size: 16px; color: #666; }
+
+.beneficios-list { list-style: none; padding: 0; margin-bottom: 20px; text-align: left; }
+.beneficios-list li { margin-bottom: 8px; font-size: 14px; color: #555; }
+
+/* Sección de Pago */
+.payment-section {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.methods-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.method-btn {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.method-btn.active { background: #007bff; color: white; border-color: #007bff; }
+
+/* Contenido de métodos */
+.qr-container { text-align: center; padding: 20px; }
+.fake-qr { width: 180px; height: 180px; background: #333; margin: auto; display: flex; align-items: center; justify-content: center; color: white; border-radius: 10px; }
+
+.card-form { display: grid; gap: 15px; max-width: 400px; margin: auto; }
+.card-form input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+
+.btn-confirm {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ... (mantén tus estilos anteriores y añade/cambia estos) ... */
+
+.alert-info {
+  background: #e7f3ff;
+  color: #007bff;
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.hab-limit {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 15px 0;
+  color: #333;
+  font-size: 15px;
+  border: 1px solid #ddd;
+}
+
+.btn-confirm-qr {
+  background: #28a745; /* Verde para QR */
+  color: white;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.btn-confirm-card {
+  background: #007bff; /* Azul para Tarjeta */
+  color: white;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.qr-container {
+  text-align: center;
+  border: 2px dashed #ccc;
+  padding: 20px;
+  border-radius: 15px;
+}

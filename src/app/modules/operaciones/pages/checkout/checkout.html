@@ -1,0 +1,56 @@
+<div class="checkin-container">
+  <div *ngIf="!datos" style="text-align: center; padding: 50px;">
+    <h2>⏳ Calculando tarifas...</h2>
+  </div>
+
+  <div class="card" *ngIf="datos">
+    <div class="card-header" style="background-color: #343a40;">
+      <h2><i class="fas fa-file-invoice-dollar"></i> Resumen de Check-Out</h2>
+      <span class="room-badge">Habitación #{{ datos.habitacion.numero }}</span>
+    </div>
+
+    <div class="card-body">
+      <div class="section">
+        <h3>Detalles de la Estadía</h3>
+        <div class="info-grid">
+          <div class="info-item"><strong>Huésped:</strong> {{datos.huesped.nombre || datos.huesped.nombres}}</div>
+          <div class="info-item"><strong>Ingreso:</strong> {{datos.fechaIngreso | date:'short'}}</div>
+          <div class="info-item"><strong>Salida:</strong> {{datos.fechaSalida | date:'short'}}</div>
+          <div class="info-item" style="color: #007bff;"><strong>Tiempo Total:</strong> {{datos.horasTotales}} horas</div>
+        </div>
+      </div>
+
+      <div class="section mt-20">
+        <h3>Liquidación de Pagos</h3>
+        <div class="grid-form" style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+
+          <div class="input-field" style="display: flex; flex-direction: column; justify-content: center;">
+            <label style="font-size: 1.1rem; font-weight: bold;">Método de Pago</label>
+            <select [(ngModel)]="metodoPago" style="padding: 10px; font-size: 1.1rem;">
+              <option value="EFECTIVO">💵 Contado / Efectivo</option>
+              <option value="YAPE">📱 Yape / Plin</option>
+              <option value="TARJETA">💳 Tarjeta Débito/Crédito</option>
+            </select>
+          </div>
+
+          <div style="text-align: right; font-size: 1.2rem;">
+            <p style="margin: 5px 0;">Total Bruto: <strong>S/ {{datos.totalAPagar | number:'1.2-2'}}</strong></p>
+            <p style="margin: 5px 0; color: #dc3545;">Adelanto: <strong>- S/ {{datos.adelanto | number:'1.2-2'}}</strong></p>
+            <hr>
+            <h2 style="color: #28a745; margin-top: 10px;">A COBRAR: S/ {{datos.saldoPendiente | number:'1.2-2'}}</h2>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-secondary" (click)="regresar()" [disabled]="procesando">Volver</button>
+
+      <button class="btn-primary" (click)="confirmarPagoYDescargar()" [disabled]="procesando">
+        <span *ngIf="!procesando"><i class="fas fa-check-double"></i> Confirmar Pago y Generar Boleta</span>
+        <span *ngIf="procesando">Procesando...</span>
+      </button>
+    </div>
+  </div>
+</div>

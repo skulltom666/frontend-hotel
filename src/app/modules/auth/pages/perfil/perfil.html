@@ -1,0 +1,87 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="icon">🏨</span>
+      <h3>{{ nombreHotel }}</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="javascript:void(0)" (click)="router.navigate(['/portal'])">🏠 Inicio / Portal</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/dashboard'])">📊 Dashboard</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/gestion-pisos'])">🏢 Pisos y Habitaciones</a>
+      <a href="javascript:void(0)" class="active">👤 Mi Perfil</a>
+      <a href="javascript:void(0)">⚙️ Configuración</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="cambiarSede()" class="btn-back">
+        🔄 Cambiar de Sede
+      </button>
+      <button (click)="cerrarSesion()" class="btn-logout">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="main-header">
+      <h1 class="header-title">Configuración de Perfil: <span style="color: #007bff;">{{ nombreHotel }}</span></h1>
+
+      <div class="user-info">
+        <span class="welcome-user">Hola, <strong>{{ nombreUsuario }}</strong></span>
+        <div class="avatar">{{ nombreUsuario.substring(0,1).toUpperCase() }}</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="welcome-card">
+        <div class="welcome-text">
+          <h2>Vinculación de Identidad</h2>
+          <p>Completa tus datos para que el sistema te reconozca como cliente oficial del hotel.</p>
+        </div>
+        <div class="welcome-img">👤</div>
+      </div>
+
+      <div class="profile-form-container">
+        <div class="form-card">
+          <div class="form-section">
+            <h4 class="form-section-title"><i class="fas fa-id-card"></i> Datos de Identificación</h4>
+            <div class="search-dni-group">
+              <input type="text" [(ngModel)]="perfilCompleto.dni" placeholder="Ingresa tu DNI para vincular" maxlength="9">
+              <button class="btn-search" (click)="buscarDatosPorDni()" [disabled]="buscandoDni">
+                {{ buscandoDni ? '⏳' : '🔍 Verificar DNI' }}
+              </button>
+            </div>
+            <small class="helper-text">Si ya estás registrado como cliente, tus datos se cargarán automáticamente.</small>
+          </div>
+
+          <div class="grid-inputs">
+            <div class="input-field">
+              <label>Nombres</label>
+              <input type="text" [(ngModel)]="perfilCompleto.nombres">
+            </div>
+            <div class="input-field">
+              <label>Apellidos</label>
+              <input type="text" [(ngModel)]="perfilCompleto.apellidos">
+            </div>
+            <div class="input-field">
+              <label>Teléfono / Celular</label>
+              <input type="text" [(ngModel)]="perfilCompleto.telefono">
+            </div>
+            <div class="input-field">
+              <label>Correo Electrónico</label>
+              <input type="email" [(ngModel)]="perfilCompleto.email" disabled>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button class="btn-secondary-form" (click)="router.navigate(['/portal'])">Descartar</button>
+            <button class="btn-primary-form" (click)="guardarPerfil()">
+              <i class="fas fa-save"></i> Guardar y Vincular Cuenta
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

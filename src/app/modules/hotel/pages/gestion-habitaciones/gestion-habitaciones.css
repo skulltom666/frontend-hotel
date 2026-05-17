@@ -1,0 +1,209 @@
+/* ==========================================================================
+   1. ESTRUCTURA GLOBAL (Base Unificada)
+   ========================================================================== */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #2c3e50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-header .icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+.sidebar-nav { flex: 1; padding: 20px 0; }
+.sidebar-nav a { display: block; padding: 15px 25px; color: #bdc3c7; text-decoration: none; transition: 0.3s; font-size: 1rem; }
+.sidebar-nav a:hover, .sidebar-nav a.active { background-color: #34495e; color: white; border-left: 4px solid #3498db; }
+
+.sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+.btn-back { width: 100%; padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 5px; cursor: pointer; }
+.btn-logout { background: #dc3545; color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; cursor: pointer; margin-top: 10px; }
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+
+  margin-left: 260px; /* Espacio para la sidebar fija */
+
+  flex: 1;
+
+  padding: 30px;
+
+}
+
+/* --- 🚨 CORRECCIÓN DE ENCABEZADO (TAMAÑO Y COLOR) --- */
+.main-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 30px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 2px solid #e0e0e0;
+
+}
+
+.header-title {
+  font-size: 1.5rem !important; /* Tamaño unificado solicitado */
+  color: #2c3e50 !important;   /* Color oscuro solicitado */
+  margin: 0;
+  font-weight: 700;
+}
+
+.hotel-highlight {
+  color: #3498db; /* Azul corporativo */
+}
+
+.welcome-user {
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.user-info { display: flex; align-items: center; gap: 15px; }
+
+.avatar {
+  width: 40px; height: 40px; background-color: #3498db; color: white;
+  border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold;
+}
+
+/* ==========================================================================
+   2. FORMULARIO Y CONFIGURACIÓN (Estilos Antiguos)
+   ========================================================================== */
+.card-config {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+.card-header-internal {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  border-bottom: 2px solid #f0f2f5; padding-bottom: 10px; color: #2c3e50;
+}
+
+.section-title {
+  font-size: 1.1rem; color: #2c3e50; border-bottom: 2px solid #3498db;
+  padding-bottom: 5px; margin: 25px 0 15px 0;
+}
+
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+.form-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.full-width { grid-column: 1 / -1; }
+
+.form-group label { font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; color: #555; }
+.form-group input, .form-group select {
+  padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;
+}
+
+.form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 25px; }
+.btn-primary { background: #3498db; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.btn-secondary { background: #ecf0f1; color: #333; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+/* ==========================================================================
+   3. FILTROS DE ESTADO (Cards Superiores)
+   ========================================================================== */
+.status-summary {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; margin-bottom: 25px;
+}
+
+.summary-card {
+  padding: 15px; border-radius: 10px; text-align: center; cursor: pointer;
+  color: white; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.summary-card:hover { filter: brightness(1.1); transform: translateY(-3px); }
+
+.summary-card.active {
+  transform: scale(1.08); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  outline: 3px solid #2c3e50; outline-offset: 3px;
+}
+
+.summary-card.total { background-color: #34495e; }
+.summary-card.disponible { background-color: #27ae60; }
+.summary-card.ocupado { background-color: #e74c3c; }
+.summary-card.sucio { background-color: #e67e22; }
+.summary-card.en_limpieza { background-color: #3498db; }
+.summary-card.mantenimiento { background-color: #8e44ad; }
+
+.count { display: block; font-size: 1.8rem; font-weight: bold; }
+.label { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
+
+/* ==========================================================================
+   4. GRILLA DE HABITACIONES (Diseño de Cartas)
+   ========================================================================== */
+.piso-section { margin-bottom: 30px; }
+.piso-title { font-size: 1.2rem; color: #333; margin-bottom: 15px; padding-left: 10px; border-left: 4px solid #34495e; }
+
+.habitaciones-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px;
+}
+
+.hab-card { padding: 15px; border-radius: 10px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.clickable { cursor: pointer; transition: 0.2s; }
+.clickable:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+
+/* Colores de Habitaciones */
+.DISPONIBLE { background-color: #27ae60 !important; }
+.OCUPADO { background-color: #e74c3c !important; }
+.SUCIO { background-color: #e67e22 !important; }
+.EN_LIMPIEZA { background-color: #3498db !important; }
+.MANTENIMIENTO { background-color: #8e44ad !important; }
+
+.hab-header { display: flex; justify-content: space-between; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 8px; margin-bottom: 10px; }
+.status-badge { font-size: 0.7rem; background: rgba(0,0,0,0.2); padding: 3px 8px; border-radius: 12px; }
+
+.room-guest-info {
+  margin: 5px 10px; padding: 4px; background: rgba(255, 255, 255, 0.25); border-radius: 4px;
+  font-size: 0.8rem; font-weight: 600; color: #fff; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+
+/* ==========================================================================
+   5. MODALES (Detalle de Check-In)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background: white; width: 90%; max-width: 500px; border-radius: 15px; overflow: hidden;
+  animation: slideIn 0.3s ease-out; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+@keyframes slideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-header { padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+.close-btn { background: none; border: none; color: white; font-size: 2.2rem; cursor: pointer; }
+
+.modal-body { padding: 25px; color: #333; }
+.guest-alert { background-color: #ffe8a1; border-left: 4px solid #ffc107; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; color: #856404; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.info-item { background: #f8f9fa; padding: 10px; border-radius: 8px; font-size: 0.95rem; border: 1px solid #eee; }
+
+.modal-desc { font-size: 0.95rem; color: #444; background: #f0f4f8; padding: 12px; border-left: 4px solid #3498db; border-radius: 4px; }
+
+.tarifa-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+.tarifa-table td { padding: 12px 5px; border-bottom: 1px solid #f0f0f0; }
+
+.modal-footer { padding: 20px; text-align: center; background: #f9f9f9; border-top: 1px solid #eee; }
+
+.btn-checkin { background: #27ae60; color: white; border: none; padding: 15px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
+.btn-checkout { background: #e74c3c; color: white; border: none; padding: 15px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }

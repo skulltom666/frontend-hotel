@@ -1,0 +1,26 @@
+<div style="padding: 40px; font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; min-height: 100vh;">
+  <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; display: inline-block;">
+    🏢 Tus Hoteles Suscritos
+  </h2>
+
+  @if (hoteles.length === 0) {
+  <div style="text-align: center; ...">
+    <p>Aún no tienes hoteles registrados.</p>
+
+    <button (click)="router.navigate(['/suscripcion'])"
+            style="margin-top: 20px; background-color: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+      ✨ Crear mi primer Hotel
+    </button>
+  </div>
+  } @else {
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+    @for (hotel of hoteles; track hotel.id) {
+    <div (click)="gestionarHotel(hotel.id)"
+         style="background: white; padding: 20px; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #007bff;">
+      <h3 style="margin: 0; color: #007bff;">{{ hotel.nombre }}</h3>
+      <p style="color: #666; font-size: 14px; margin: 10px 0;">📍 {{ hotel.direccion }}</p>
+    </div>
+    }
+  </div>
+  }
+</div>

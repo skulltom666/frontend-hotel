@@ -1,0 +1,107 @@
+<form #checkinForm="ngForm" class="checkin-container">
+  <div class="card">
+    <div class="card-header">
+      <h2><i class="fas fa-key"></i> Registro de Check-In</h2>
+      <span class="room-badge">Habitación #{{ idHabitacion }}</span>
+    </div>
+
+    <div class="card-body">
+      <div class="section">
+        <h3>Datos del Huésped</h3>
+
+        <div class="search-group">
+          <div class="input-field">
+            <label>DNI o Carné de Extranjería (CE)</label>
+            <div style="position: relative;">
+              <input type="text"
+                     name="dni"
+                     [(ngModel)]="huesped.dni"
+                     (ngModelChange)="onDniChange($event)"
+                     placeholder="8 o 9 dígitos"
+                     maxlength="9"
+                     pattern="^[0-9]{8,9}$"
+                     required
+                     #dniCtrl="ngModel"
+                     style="width: 100%; padding-right: 90px; border-radius: 5px;">
+
+              <span *ngIf="buscandoDni" style="position: absolute; right: 10px; top: 10px; color: #007bff; font-weight: bold;">
+                ⏳ Buscando...
+              </span>
+              <span *ngIf="!buscandoDni && huesped.nombres !== '' && !esNuevoHuesped" style="position: absolute; right: 10px; top: 10px; color: #28a745; font-weight: bold;">
+                ✅ ¡Encontrado!
+              </span>
+              <span *ngIf="!buscandoDni && esNuevoHuesped" style="position: absolute; right: 10px; top: 10px; color: #ff9800; font-weight: bold;">
+                ✨ ¡Nuevo!
+              </span>
+            </div>
+            <small class="error-text" *ngIf="dniCtrl.invalid && (dniCtrl.dirty || dniCtrl.touched)">
+              Solo se permiten 8 o 9 números.
+            </small>
+          </div>
+        </div>
+
+        <div class="grid-form">
+          <div class="input-field">
+            <label>Nombres</label>
+            <input type="text" name="nombres" [(ngModel)]="huesped.nombres" [disabled]="buscandoDni"
+                   placeholder="Ej. Jean-Paul" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-]+$" required #nombresCtrl="ngModel">
+            <small class="error-text" *ngIf="nombresCtrl.invalid && (nombresCtrl.dirty || nombresCtrl.touched)">
+              Solo letras y guiones permitidos.
+            </small>
+          </div>
+
+          <div class="input-field">
+            <label>Apellidos</label>
+            <input type="text" name="apellidos" [(ngModel)]="huesped.apellidos" [disabled]="buscandoDni"
+                   placeholder="Apellidos completos" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-]+$" required #apellidosCtrl="ngModel">
+            <small class="error-text" *ngIf="apellidosCtrl.invalid && (apellidosCtrl.dirty || apellidosCtrl.touched)">
+              Solo letras y guiones permitidos.
+            </small>
+          </div>
+
+          <div class="input-field">
+            <label>Teléfono / Celular</label>
+            <input type="text" name="telefono" [(ngModel)]="huesped.telefono" [disabled]="buscandoDni"
+                   placeholder="Ej. 987654321" maxlength="9" pattern="^[0-9]{9}$" required #telefonoCtrl="ngModel">
+            <small class="error-text" *ngIf="telefonoCtrl.invalid && (telefonoCtrl.dirty || telefonoCtrl.touched)">
+              Debe contener exactamente 9 números.
+            </small>
+          </div>
+
+          <div class="input-field">
+            <label>Correo Electrónico (Opcional)</label>
+            <input type="email" name="email" [(ngModel)]="huesped.email" [disabled]="buscandoDni"
+                   placeholder="usuario@correo.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #emailCtrl="ngModel">
+            <small class="error-text" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
+              Formato de correo inválido.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="section mt-20">
+        <h3>Detalles de la Operación</h3>
+        <div class="grid-form">
+          <div class="input-field">
+            <label>Adelanto (S/.)</label>
+            <input type="number" name="adelanto" [(ngModel)]="operacion.adelanto" class="highlight-input" min="0" required>
+          </div>
+          <div class="input-field full-width">
+            <label>Observaciones / Notas</label>
+            <textarea name="observacion" [(ngModel)]="operacion.observacion" rows="2" placeholder="¿Algún requerimiento especial?"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="button" class="btn-secondary" (click)="regresar()">Cancelar</button>
+
+      <button type="button" class="btn-primary"
+              (click)="confirmarCheckIn()"
+              [disabled]="checkinForm.invalid || buscandoDni">
+        <i class="fas fa-check"></i> Confirmar Ingreso
+      </button>
+    </div>
+  </div>
+</form>

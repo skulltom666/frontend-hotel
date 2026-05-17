@@ -1,0 +1,99 @@
+<div class="subs-container" style="padding: 40px; font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; min-height: 100vh;">
+
+  <div class="section-title" style="text-align: center; margin-bottom: 40px;">
+    <h1 style="color: #2c3e50; font-size: 2.5rem;">🚀 Impulsa tu Hotel</h1>
+    <p style="color: #7f8c8d; font-size: 1.1rem;">Selecciona el nivel de capacidad que tu negocio necesita hoy.</p>
+    <div class="alert-info" style="display: inline-block; background: #e8f4fd; color: #2980b9; padding: 10px 20px; border-radius: 30px; margin-top: 15px; font-size: 0.9rem; border: 1px solid #b3d7f2;">
+      ℹ️ Suscripción válida para <strong>1 establecimiento</strong>.
+    </div>
+  </div>
+
+  <div class="planes-grid" style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-bottom: 50px;">
+    @for (plan of planes; track plan.nombre) {
+    <div class="plan-card"
+         [style.border-top]="planSeleccionado?.nombre === plan.nombre ? '8px solid #007bff' : '8px solid #dee2e6'"
+         [style.transform]="planSeleccionado?.nombre === plan.nombre ? 'scale(1.05)' : 'scale(1)'"
+         (click)="seleccionarPlan(plan)"
+         style="background: white; padding: 30px; border-radius: 15px; width: 280px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.3s ease; position: relative;">
+
+      @if (plan.nombre === 'PREMIUM') {
+      <span style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #007bff; color: white; padding: 4px 15px; border-radius: 20px; font-size: 11px; font-weight: bold;">RECOMENDADO</span>
+      }
+
+      <h3 style="margin-top: 10px; color: #34495e;">{{ plan.nombre }}</h3>
+      <div class="price" style="font-size: 32px; font-weight: bold; margin: 15px 0; color: #2c3e50;">
+        ${{ plan.precio }}<span style="font-size: 14px; color: #bdc3c7;">/mes</span>
+      </div>
+
+      <div class="hab-limit" style="background: #f1f2f6; padding: 8px; border-radius: 8px; margin-bottom: 20px; text-align: center; color: #007bff;">
+        <strong>Hasta {{ plan.habitaciones }} habitaciones</strong>
+      </div>
+
+      <ul class="beneficios-list" style="list-style: none; padding: 0; margin-bottom: 30px; text-align: left;">
+        @for (ben of plan.beneficios; track ben) {
+        <li style="margin-bottom: 10px; color: #7f8c8d; font-size: 0.95rem;">
+          <span style="color: #27ae60; margin-right: 8px;">✔</span> {{ ben }}
+        </li>
+        }
+      </ul>
+
+      <button style="width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;"
+              [style.background]="planSeleccionado?.nombre === plan.nombre ? '#27ae60' : '#f8f9fa'"
+              [style.color]="planSeleccionado?.nombre === plan.nombre ? 'white' : '#2c3e50'">
+        {{ planSeleccionado?.nombre === plan.nombre ? '✅ Seleccionado' : 'Elegir Plan' }}
+      </button>
+    </div>
+    }
+  </div>
+
+  @if (planSeleccionado) {
+  <div class="payment-section" style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid #eee;">
+
+    <div class="payment-header" style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 30px;">
+      <h3 style="margin: 0; color: #2c3e50;">Confirmar Suscripción: {{ planSeleccionado.nombre }}</h3>
+      <p style="color: #7f8c8d; margin-top: 5px;">Total a pagar hoy: <strong>${{ planSeleccionado.precio }}</strong></p>
+    </div>
+
+    <div class="methods-tabs" style="display: flex; gap: 10px; margin-bottom: 25px;">
+      <button (click)="metodoPago = 'qr'"
+              [style.background]="metodoPago === 'qr' ? '#007bff' : '#f8f9fa'"
+              [style.color]="metodoPago === 'qr' ? 'white' : '#7f8c8d'"
+              style="flex: 1; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+        📱 Pago QR (Yape/Plin)
+      </button>
+      <button (click)="metodoPago = 'tarjeta'"
+              [style.background]="metodoPago === 'tarjeta' ? '#007bff' : '#f8f9fa'"
+              [style.color]="metodoPago === 'tarjeta' ? 'white' : '#7f8c8d'"
+              style="flex: 1; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+        💳 Tarjeta Crédito/Débito
+      </button>
+    </div>
+
+    @if (metodoPago === 'qr') {
+    <div class="qr-container" style="text-align: center; padding: 20px;">
+      <div style="background: #333; color: white; width: 180px; height: 180px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 50px;">
+        🔳
+      </div>
+      <p style="color: #7f8c8d; font-size: 0.9rem;">Escanea el código con tu App bancaria para finalizar.</p>
+      <button (click)="confirmarPago()" style="margin-top: 20px; width: 100%; background: #27ae60; color: white; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+        ✅ Ya realicé mi transferencia
+      </button>
+    </div>
+    }
+
+    @if (metodoPago === 'tarjeta') {
+    <div class="card-form" style="display: flex; flex-direction: column; gap: 15px;">
+      <input type="text" placeholder="Nombre del titular" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+      <input type="text" placeholder="Número de tarjeta (16 dígitos)" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+      <div style="display: flex; gap: 10px;">
+        <input type="text" placeholder="MM/AA" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+        <input type="text" placeholder="CVV" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+      </div>
+      <button (click)="confirmarPago()" style="background: #007bff; color: white; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 10px;">
+        💳 Pagar ${{ planSeleccionado.precio }}
+      </button>
+    </div>
+    }
+  </div>
+  }
+</div>

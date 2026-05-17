@@ -1,0 +1,183 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="icon">🏨</span>
+      <h3>{{ nombreHotel }}</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="javascript:void(0)" (click)="router.navigate(['/portal'])">🏠 Inicio / Portal</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/dashboard'])">📊 Dashboard</a>
+      <a href="javascript:void(0)" class="active">🏢 Pisos y Habitaciones</a>
+      <a href="javascript:void(0)" (click)="router.navigate(['/perfil'])">👤 Mi Perfil</a>
+      <a href="javascript:void(0)">⚙️ Configuración</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="cambiarSede()" class="btn-back">
+        🔄 Cambiar de Sede
+      </button>
+      <button (click)="cerrarSesion()" class="btn-logout">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="main-header">
+      <h1 class="header-title">Gestión de Operaciones: <span class="hotel-highlight">{{ nombreHotel }}</span></h1>
+      <div class="user-info">
+        <span class="welcome-user">Hola, <strong>{{ nombreUsuario }}</strong></span>
+        <div class="avatar">{{ nombreUsuario.substring(0,1).toUpperCase() }}</div>
+      </div>
+    </header>
+
+    <section class="content-body">
+      <div class="card-config">
+        <div class="card-header-internal">
+          <span class="icon">✨</span>
+          <h2>Configuración de Habitación</h2>
+        </div>
+
+        <form (ngSubmit)="guardarHabitacion()" class="form-complex">
+          <h3 class="section-title">Datos Principales</h3>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Piso</label>
+              <select [(ngModel)]="nuevaHabitacion.piso" name="piso" required>
+                <option *ngFor="let p of pisosDisponibles" [ngValue]="p">Nivel {{ p }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Número</label>
+              <input type="text" [(ngModel)]="nuevaHabitacion.numero" name="numero" placeholder="Ej: 101" required>
+            </div>
+            <div class="form-group">
+              <label>Límite Personas</label>
+              <input type="number" [(ngModel)]="nuevaHabitacion.limitePersonas" name="limite" min="1" required>
+            </div>
+          </div>
+
+          <div class="form-group full-width" style="margin-top: 15px;">
+            <label>Descripción / Detalles</label>
+            <input type="text" [(ngModel)]="nuevaHabitacion.descripcion" name="descripcion" placeholder="Ej: Vista a la calle, TV 50', frigobar...">
+          </div>
+
+          <h3 class="section-title">Distribución</h3>
+          <div class="form-grid-2">
+            <div class="form-group"><label>Camas Simples</label><input type="number" [(ngModel)]="nuevaHabitacion.camasSimples" name="camasS"></div>
+            <div class="form-group"><label>Camas Dobles</label><input type="number" [(ngModel)]="nuevaHabitacion.camasDobles" name="camasD"></div>
+          </div>
+
+          <h3 class="section-title">Tarifas (S/)</h3>
+          <div class="form-grid-5">
+            <div class="form-group"><label>Horas Mín.</label><input type="number" [(ngModel)]="nuevaHabitacion.horasMinimas" name="horasMin"></div>
+            <div class="form-group"><label>Precio Mín.</label><input type="number" step="0.10" [(ngModel)]="nuevaHabitacion.precioMinimo" name="pMin"></div>
+            <div class="form-group"><label>Precio 12h</label><input type="number" step="0.10" [(ngModel)]="nuevaHabitacion.precio12Horas" name="p12h"></div>
+            <div class="form-group"><label>Precio 24h</label><input type="number" step="0.10" [(ngModel)]="nuevaHabitacion.precio24Horas" name="p24h"></div>
+            <div class="form-group"><label>Hora Extra</label><input type="number" step="0.10" [(ngModel)]="nuevaHabitacion.precioHoraExtra" name="pExtra"></div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="limpiarFormulario()">Limpiar</button>
+            <button type="submit" class="btn-primary">Guardar Habitación</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="status-summary">
+        <div class="summary-card total" (click)="setFiltro('TODOS')" [class.active]="filtroSeleccionado === 'TODOS'">
+          <span class="count">{{ habitaciones.length }}</span>
+          <span class="label">Total</span>
+        </div>
+        <div class="summary-card disponible" (click)="setFiltro('DISPONIBLE')" [class.active]="filtroSeleccionado === 'DISPONIBLE'">
+          <span class="count">{{ contarPorEstado('DISPONIBLE') }}</span>
+          <span class="label">Disponibles</span>
+        </div>
+        <div class="summary-card ocupado" (click)="setFiltro('OCUPADO')" [class.active]="filtroSeleccionado === 'OCUPADO'">
+          <span class="count">{{ contarPorEstado('OCUPADO') }}</span>
+          <span class="label">Ocupados</span>
+        </div>
+        <div class="summary-card sucio" (click)="setFiltro('SUCIO')" [class.active]="filtroSeleccionado === 'SUCIO'">
+          <span class="count">{{ contarPorEstado('SUCIO') }}</span>
+          <span class="label">Sucios</span>
+        </div>
+        <div class="summary-card en_limpieza" (click)="setFiltro('EN_LIMPIEZA')" [class.active]="filtroSeleccionado === 'EN_LIMPIEZA'">
+          <span class="count">{{ contarPorEstado('EN_LIMPIEZA') }}</span>
+          <span class="label">Limpieza</span>
+        </div>
+        <div class="summary-card mantenimiento" (click)="setFiltro('MANTENIMIENTO')" [class.active]="filtroSeleccionado === 'MANTENIMIENTO'">
+          <span class="count">{{ contarPorEstado('MANTENIMIENTO') }}</span>
+          <span class="label">Mantenimiento</span>
+        </div>
+      </div>
+
+      <div class="pisos-wrapper">
+        <div *ngFor="let piso of pisosDisponibles" class="piso-section">
+          <h3 class="piso-title">🏢 Nivel {{ piso }}</h3>
+          <div class="habitaciones-grid">
+            <div *ngFor="let hab of obtenerHabitacionesPorPiso(piso)"
+                 class="hab-card clickable"
+                 [ngClass]="hab.estadoActual"
+                 (click)="verDetalle(hab)">
+              <div class="hab-header">
+                <span class="hab-numero">{{ hab.numero }}</span>
+                <span class="status-badge">{{ hab.estadoActual }}</span>
+              </div>
+              <div class="room-guest-info" *ngIf="hab.estadoActual === 'OCUPADO' && hab.huespedActual">
+                <i class="fas fa-user"></i>
+                <span>{{ hab.huespedActual.nombre || hab.huespedActual.nombres }}</span>
+              </div>
+              <div class="hab-body">
+                <p>🛏️ {{ hab.camasSimples }}S | {{ hab.camasDobles }}D</p>
+                <p class="precio-tag">Min: S/ {{ hab.precioMinimo }}</p>
+                <p style="font-size: 0.8rem; margin: 0; opacity: 0.9;">12h: S/ {{ hab.precio12Horas }} | 24h: S/ {{ hab.precio24Horas }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" *ngIf="habSeleccionada" (click)="cerrarDetalle()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header" [ngClass]="habSeleccionada.estadoActual">
+        <h2>Habitación {{ habSeleccionada.numero }}</h2>
+        <button class="close-btn" (click)="cerrarDetalle()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="guest-alert" *ngIf="habSeleccionada.estadoActual === 'OCUPADO' && habSeleccionada.huespedActual">
+          <i class="fas fa-id-card"></i>
+          <div>
+            <strong>Ocupado por:</strong> {{ habSeleccionada.huespedActual.nombre || habSeleccionada.huespedActual.nombres }} {{ habSeleccionada.huespedActual.apellido || habSeleccionada.huespedActual.apellidos }}<br>
+            <small>DNI: {{ habSeleccionada.huespedActual.dni }}</small>
+          </div>
+        </div>
+        <div class="info-grid">
+          <div class="info-item"><strong>Piso:</strong> {{ habSeleccionada.piso }}</div>
+          <div class="info-item"><strong>Capacidad:</strong> {{ habSeleccionada.limitePersonas }} pers.</div>
+        </div>
+        <h3 class="tarifas-title">Tarifario Completo</h3>
+        <table class="tarifa-table">
+          <tr>
+            <td>Horas Mínimas ({{habSeleccionada.horasMinimas}}h)</td>
+            <td><strong>S/ {{habSeleccionada.precioMinimo}}</strong></td>
+          </tr>
+          <tr><td>Tarifa 12 Horas</td><td>S/ {{habSeleccionada.precio12Horas}}</td></tr>
+          <tr><td>Tarifa 24 Horas</td><td>S/ {{habSeleccionada.precio24Horas}}</td></tr>
+          <tr><td>Hora Extra</td><td>S/ {{habSeleccionada.precioHoraExtra}}</td></tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-danger-outline" (click)="eliminarHabitacion(habSeleccionada.id)">Eliminar</button>
+        <div class="actions-right">
+          <button class="btn-checkin" *ngIf="habSeleccionada.estadoActual === 'DISPONIBLE'" (click)="irACheckIn(habSeleccionada.id)">IR A CHECK-IN</button>
+          <button class="btn-checkout" *ngIf="habSeleccionada.estadoActual === 'OCUPADO'" (click)="irACheckOut(habSeleccionada.id)">IR A CHECK-OUT</button>
+          <button class="btn-clean" *ngIf="habSeleccionada.estadoActual === 'SUCIO'" (click)="cambiarEstado(habSeleccionada.id, 'EN_LIMPIEZA')">Limpiar</button>
+          <button class="btn-primary" *ngIf="habSeleccionada.estadoActual === 'EN_LIMPIEZA'" (click)="cambiarEstado(habSeleccionada.id, 'DISPONIBLE')">Finalizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

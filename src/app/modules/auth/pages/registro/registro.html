@@ -1,0 +1,31 @@
+<div class="auth-bg">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>✨ Crear Cuenta</h2>
+      <p>Únete para administrar tus hoteles de forma inteligente.</p>
+    </div>
+
+    <form (ngSubmit)="registrar()">
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" name="nombre" [(ngModel)]="usuario.nombre" placeholder="Juan Pérez" required>
+      </div>
+
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" [(ngModel)]="usuario.email" placeholder="ejemplo@correo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="password" [(ngModel)]="usuario.password" placeholder="Crea una contraseña segura" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Registrarme Ahora</button>
+
+      <div class="auth-footer">
+        <p>¿Ya tienes una cuenta? <a href="javascript:void(0)" (click)="router.navigate(['/login'])">Inicia sesión aquí</a></p>
+      </div>
+    </form>
+  </div>
+</div>
