@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HotelService {
-  private API_URL = 'http://localhost:8080/api/hoteles';
+  private apiUrl = 'http://localhost:8080/api/hoteles';
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +26,7 @@ export class HotelService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Llamamos al endpoint /mio que configuramos en Java
-    return this.http.get<any[]>(`${this.API_URL}/mio`, { headers });
+    return this.http.get<any[]>(`${this.apiUrl}/mio`, { headers });
   }
 
   /**
@@ -39,6 +39,6 @@ export class HotelService {
     console.log('🏗️ Enviando registro de hotel:', hotel.nombre);
 
     // Apunta a /registrar (@PostMapping("/registrar") en tu Java)
-    return this.http.post(`${this.API_URL}/registrar`, hotel, { headers });
+    return this.http.post(`${this.apiUrl}/registrar`, hotel, { headers });
   }
 }

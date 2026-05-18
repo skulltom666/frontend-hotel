@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RoomService {
   // Ajusta esta URL a la de tu backend en Java
-  private API_URL = 'http://localhost:8080/api';
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -15,26 +15,26 @@ export class RoomService {
 
   // Obtiene el historial de movimientos de una habitación específica
   getHistory(habitacionId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API_URL}/habitaciones/${habitacionId}/historial`);
+    return this.http.get<any[]>(`${this.apiUrl}/habitaciones/${habitacionId}/historial`);
   }
 
   // --- MÉTODOS DE HUÉSPEDES ---
 
   // Busca un huésped por DNI/CE en la base de datos
   buscarHuesped(documento: string): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}/huespedes/buscar/${documento}`);
+    return this.http.get<any>(`${this.apiUrl}/huespedes/buscar/${documento}`);
   }
 
   // Registra un nuevo huésped
   guardarHuesped(huesped: any): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/huespedes`, huesped);
+    return this.http.post<any>(`${this.apiUrl}/huespedes`, huesped);
   }
 
   // --- MÉTODOS OPERATIVOS (CHECK-IN / OUT) ---
 
   // Realiza el ingreso a una habitación
   checkIn(habitacionId: number, huespedId: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/habitaciones/${habitacionId}/check-in`, { huespedId });
+    return this.http.post(`${this.apiUrl}/habitaciones/${habitacionId}/check-in`, { huespedId });
   }
 
   // Realiza la salida y registra el pago
@@ -45,26 +45,26 @@ export class RoomService {
     tiempo: string,
   ): Observable<any> {
     const payload = { total, metodoPago, tiempoUso: tiempo };
-    return this.http.post(`${this.API_URL}/habitaciones/${habitacionId}/check-out`, payload);
+    return this.http.post(`${this.apiUrl}/habitaciones/${habitacionId}/check-out`, payload);
   }
 
   // --- MÉTODOS DE LIMPIEZA ---
 
   iniciarLimpieza(habitacionId: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/habitaciones/${habitacionId}/limpieza-inicio`, {});
+    return this.http.post(`${this.apiUrl}/habitaciones/${habitacionId}/limpieza-inicio`, {});
   }
 
   finalizarLimpieza(habitacionId: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/habitaciones/${habitacionId}/limpieza-fin`, {});
+    return this.http.post(`${this.apiUrl}/habitaciones/${habitacionId}/limpieza-fin`, {});
   }
 
   // Obtiene todas las habitaciones de un hotel específico
   getHabitacionesPorHotel(hotelId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API_URL}/habitaciones/hotel/${hotelId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/habitaciones/hotel/${hotelId}`);
   }
 
   // Envía la nueva habitación a Java para guardarla
   crearHabitacion(habitacion: any): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/habitaciones`, habitacion);
+    return this.http.post<any>(`${this.apiUrl}/habitaciones`, habitacion);
   }
 }
