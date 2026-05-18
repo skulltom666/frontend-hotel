@@ -13,16 +13,16 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
 
   registro(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/auth/registro`, data);
+    return this.http.post(`${environment.apiUrl}/api/auth/registro`, data);
   }
 
   constructor(private http: HttpClient) {}
 
   login(credenciales: any): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credenciales);
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/login`, credenciales);
   }
 
   registrar(usuario: any): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/registro`, usuario);
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/registro`, usuario);
   }
 }
