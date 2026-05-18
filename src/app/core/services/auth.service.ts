@@ -21,10 +21,10 @@ export class AuthService {
   }
 
   login(credenciales: any): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credenciales);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, credenciales);
   }
 
   registrar(usuario: any): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/registro`, usuario);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/registro`, usuario);
   }
 }
