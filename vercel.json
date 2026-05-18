@@ -6,6 +6,6 @@
     }
   ],
   "env": {
-    "API_URL": "https://backend-sistema-hotel.onrender.com"
+    "apiUrl": "https://backend-sistema-hotel.onrender.com"
   }
 }
