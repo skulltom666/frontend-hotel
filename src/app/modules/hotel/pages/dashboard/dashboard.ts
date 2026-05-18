@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // 🚨 1. AGREGA ESTA LÍNEA
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,7 +47,7 @@ export class DashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http
-      .get<any[]>(`http://localhost:8080/api/habitaciones/hotel/${this.idHotel}`, { headers })
+      .get<any[]>(`${API_CONFIG.BASE_URL}/api/habitaciones/hotel/${this.idHotel}`, { headers })
       .subscribe((data) => {
         this.habitaciones = data;
         this.cdr.detectChanges();
@@ -64,7 +65,7 @@ export class DashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http
-      .get<any[]>(`http://localhost:8080/api/historial/hotel/${this.idHotel}`, { headers })
+      .get<any[]>(`${API_CONFIG.BASE_URL}/api/historial/hotel/${this.idHotel}`, { headers })
       .subscribe({
         next: (data) => {
           this.historial = data;

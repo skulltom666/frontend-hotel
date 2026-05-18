@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-checkin',
@@ -74,7 +75,7 @@ export class CheckinComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http
-      .get<any>(`http://localhost:8080/api/operaciones/huesped/${this.huesped.dni}`, { headers })
+      .get<any>(`${API_CONFIG.BASE_URL}/api/operaciones/huesped/${this.huesped.dni}`, { headers })
       .subscribe({
         next: (data) => {
           this.huesped.nombres = data.nombre || data.nombres || '';
@@ -134,7 +135,7 @@ export class CheckinComponent implements OnInit {
 
     // Petición POST a Java
     this.http
-      .post('http://localhost:8080/api/operaciones/checkin', dataFinal, {
+      .post(`${API_CONFIG.BASE_URL}/api/operaciones/checkin`, dataFinal, {
         headers,
         responseType: 'text', // 🚨 ESTA ES LA CLAVE: Le decimos que recibirá texto, no JSON
       })

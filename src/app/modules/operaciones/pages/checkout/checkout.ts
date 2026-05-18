@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-checkout',
@@ -40,7 +41,7 @@ export class CheckoutComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http
-      .get<any>(`http://localhost:8080/api/operaciones/${this.idHabitacion}/pre-checkout`, {
+      .get<any>(`${API_CONFIG.BASE_URL}/api/operaciones/${this.idHabitacion}/pre-checkout`, {
         headers,
       })
       .subscribe({
@@ -72,7 +73,7 @@ export class CheckoutComponent implements OnInit {
     };
 
     this.http
-      .post(`http://localhost:8080/api/operaciones/${this.idHabitacion}/check-out`, payload, {
+      .post(`${API_CONFIG.BASE_URL}/api/operaciones/${this.idHabitacion}/check-out`, payload, {
         headers,
       })
       .subscribe({

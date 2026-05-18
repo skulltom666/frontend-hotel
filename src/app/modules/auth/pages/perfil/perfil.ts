@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-perfil',
@@ -47,7 +48,7 @@ export class PerfilComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Consultamos los datos básicos del Usuario (Tabla usuario)
-    this.http.get<any>('http://localhost:8080/api/perfil/actual', { headers }).subscribe({
+    this.http.get<any>(`${API_CONFIG.BASE_URL}/api/perfil/actual`, { headers }).subscribe({
       next: (data) => {
         // Llenamos lo que sabemos del usuario
         this.perfilCompleto.email = data.email || '';
@@ -75,7 +76,7 @@ export class PerfilComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http
-      .get<any>(`http://localhost:8080/api/operaciones/huesped/${this.perfilCompleto.dni}`, {
+      .get<any>(`${API_CONFIG.BASE_URL}/api/operaciones/huesped/${this.perfilCompleto.dni}`, {
         headers,
       })
       .subscribe({
@@ -110,7 +111,7 @@ export class PerfilComponent implements OnInit {
     };
 
     this.http
-      .post('http://localhost:8080/api/perfil/vincular', datosParaEnviar, {
+      .post(`${API_CONFIG.BASE_URL}/api/perfil/vincular`, datosParaEnviar, {
         headers,
         responseType: 'text',
       })

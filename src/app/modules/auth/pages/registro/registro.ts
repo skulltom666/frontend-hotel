@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http'; // 1. IMPORTA HTTP CLIENT
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-registro',
@@ -31,7 +32,7 @@ export class Registro {
 
     // 5. LA MAGIA REAL: Llamada POST a tu backend de Spring Boot
     // (Asegúrate de que la ruta /api/auth/register sea la correcta en tu AuthController de Java)
-    this.http.post('API_URL/api/auth/registro', this.usuario).subscribe({
+    this.http.post(`${API_CONFIG.BASE_URL}/api/auth/registro`, this.usuario).subscribe({
       next: (respuesta) => {
         // Si Java responde que TODO OK (Status 200 o 201)
         alert('¡Usuario guardado REALMENTE en la base de datos!');

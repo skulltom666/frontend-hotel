@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoomService {
   // Ajusta esta URL a la de tu backend en Java
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl + '/api'; // Asegúrate de que esta ruta coincida con tu configuración en Java
 
   constructor(private http: HttpClient) {}
 

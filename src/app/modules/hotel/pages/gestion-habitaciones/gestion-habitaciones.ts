@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @Component({
   selector: 'app-gestion-habitaciones',
@@ -66,7 +67,7 @@ export class GestionHabitacionesComponent implements OnInit {
   // --- LÓGICA DE DATOS ---
 
   listarHabitaciones() {
-    this.http.get<any[]>(`http://localhost:8080/api/habitaciones/hotel/${this.idHotel}`).subscribe({
+    this.http.get<any[]>(`${API_CONFIG.BASE_URL}/api/habitaciones/hotel/${this.idHotel}`).subscribe({
       next: (data) => {
         this.habitaciones = data;
         this.cdr.detectChanges();
@@ -77,7 +78,7 @@ export class GestionHabitacionesComponent implements OnInit {
 
   guardarHabitacion() {
     this.nuevaHabitacion.hotelId = this.idHotel;
-    this.http.post('http://localhost:8080/api/habitaciones', this.nuevaHabitacion).subscribe({
+    this.http.post(`${API_CONFIG.BASE_URL}/api/habitaciones`, this.nuevaHabitacion).subscribe({
       next: () => {
         alert('✅ Habitación guardada exitosamente.');
         this.listarHabitaciones();
@@ -154,7 +155,7 @@ export class GestionHabitacionesComponent implements OnInit {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
       this.http
-        .delete(`http://localhost:8080/api/habitaciones/${id}`, { headers, responseType: 'text' })
+        .delete(`${API_CONFIG.BASE_URL}/api/habitaciones/${id}`, { headers, responseType: 'text' })
         .subscribe({
           next: () => {
             alert('✅ Habitación eliminada.');
@@ -173,7 +174,7 @@ export class GestionHabitacionesComponent implements OnInit {
 
     this.http
       .post(
-        `http://localhost:8080/api/habitaciones/${idHabitacion}/estado`,
+        `${API_CONFIG.BASE_URL}/api/habitaciones/${idHabitacion}/estado`,
         { estado: nuevoEstado },
         { headers, responseType: 'text' },
       )
