@@ -18,7 +18,7 @@ export class Registro {
     nombre: '',
     email: '',
     password: '',
-    rol: 'HUESPED', // o 'USER', 'RECEPCIONISTA' (Depende de cómo se llame en tu Java)
+    rol: 'ADMINISTRADOR',
   };
 
   // 4. INYECTAMOS HTTPCLIENT EN EL CONSTRUCTOR

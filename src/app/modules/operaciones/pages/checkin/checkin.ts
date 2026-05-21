@@ -113,8 +113,8 @@ export class CheckinComponent implements OnInit {
     // 🚨 EL TRUCO: Formateamos el huésped para que coincida EXACTAMENTE con Java
     const huespedFormateado = {
       dni: this.huesped.dni,
-      nombre: this.huesped.nombres, // 👈 Forzamos a singular
-      apellido: this.huesped.apellidos, // 👈 Forzamos a singular
+      nombres: this.huesped.nombres, // 👈 Forzamos a singular
+      apellidos: this.huesped.apellidos, // 👈 Forzamos a singular
       telefono: this.huesped.telefono,
       email: this.huesped.email,
     };

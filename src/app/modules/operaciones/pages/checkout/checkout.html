@@ -13,7 +13,7 @@
       <div class="section">
         <h3>Detalles de la Estadía</h3>
         <div class="info-grid">
-          <div class="info-item"><strong>Huésped:</strong> {{datos.huesped.nombre || datos.huesped.nombres}}</div>
+          <div class="info-item"><strong>Huésped:</strong> {{datos.huesped.nombres}} {{datos.huesped.apellidos}}</div>
           <div class="info-item"><strong>Ingreso:</strong> {{datos.fechaIngreso | date:'short'}}</div>
           <div class="info-item"><strong>Salida:</strong> {{datos.fechaSalida | date:'short'}}</div>
           <div class="info-item" style="color: #007bff;"><strong>Tiempo Total:</strong> {{datos.horasTotales}} horas</div>
@@ -37,7 +37,7 @@
             <p style="margin: 5px 0;">Total Bruto: <strong>S/ {{datos.totalAPagar | number:'1.2-2'}}</strong></p>
             <p style="margin: 5px 0; color: #dc3545;">Adelanto: <strong>- S/ {{datos.adelanto | number:'1.2-2'}}</strong></p>
             <hr>
-            <h2 style="color: #28a745; margin-top: 10px;">A COBRAR: S/ {{datos.saldoPendiente | number:'1.2-2'}}</h2>
+            <h2 style="color: #28a745; margin-top: 10px;">Cobrar: S/ {{datos.saldoPendiente | number:'1.2-2'}}</h2>
           </div>
 
         </div>

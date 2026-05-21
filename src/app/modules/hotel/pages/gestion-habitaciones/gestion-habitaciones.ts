@@ -56,6 +56,13 @@ export class GestionHabitacionesComponent implements OnInit {
 
     if (storedId) {
       this.idHotel = Number(storedId);
+
+      if (Number.isNaN(this.idHotel) || this.idHotel <= 0) {
+        console.warn('⚠️ El hotelId almacenado no es válido. Redirigiendo...');
+        this.router.navigate(['/seleccion-hotel']);
+        return;
+      }
+
       this.nuevaHabitacion.hotelId = this.idHotel;
       this.listarHabitaciones();
     } else {
@@ -77,14 +84,31 @@ export class GestionHabitacionesComponent implements OnInit {
   }
 
   guardarHabitacion() {
-    this.nuevaHabitacion.hotelId = this.idHotel;
-    this.http.post(`${API_CONFIG.BASE_URL}/api/habitaciones`, this.nuevaHabitacion).subscribe({
+    if (!this.idHotel || this.idHotel <= 0) {
+      alert('No hay un hotel válido seleccionado. Vuelve a elegir la sede.');
+      this.router.navigate(['/seleccion-hotel']);
+      return;
+    }
+
+    const payload = {
+      ...this.nuevaHabitacion,
+      hotelId: this.idHotel,
+    };
+
+    this.http.post(`${API_CONFIG.BASE_URL}/api/habitaciones`, payload).subscribe({
       next: () => {
         alert('✅ Habitación guardada exitosamente.');
         this.listarHabitaciones();
         this.limpiarFormulario();
       },
-      error: (err) => alert('Error al guardar: ' + err.message),
+      error: (err) => {
+        const mensajeBackend =
+          typeof err?.error === 'string'
+            ? err.error
+            : err?.error?.message || err?.message || 'Error desconocido';
+
+        alert('Error al guardar: ' + mensajeBackend);
+      },
     });
   }
 
