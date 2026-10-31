@@ -1,0 +1,52 @@
+[
+  {
+    "id": 101,
+    "piso": 1,
+    "numero": "101",
+    "descripcion": "Habitación simple con cama matrimonial",
+    "limitePersonas": 2,
+    "camasSimples": 0,
+    "camasDobles": 1,
+    "horasMinimas": 6,
+    "precioMinimo": 60,
+    "precio12Horas": 90,
+    "precio24Horas": 140,
+    "precioHoraExtra": 15,
+    "estadoActual": "DISPONIBLE"
+  },
+  {
+    "id": 102,
+    "piso": 1,
+    "numero": "102",
+    "descripcion": "Habitación doble ejecutiva",
+    "limitePersonas": 3,
+    "camasSimples": 1,
+    "camasDobles": 1,
+    "horasMinimas": 6,
+    "precioMinimo": 80,
+    "precio12Horas": 120,
+    "precio24Horas": 180,
+    "precioHoraExtra": 20,
+    "estadoActual": "OCUPADO",
+    "huespedActual": {
+      "dni": "72345678",
+      "nombres": "Carlos",
+      "apellidos": "Ramírez Silva"
+    }
+  },
+  {
+    "id": 201,
+    "piso": 2,
+    "numero": "201",
+    "descripcion": "Habitación suite",
+    "limitePersonas": 2,
+    "camasSimples": 0,
+    "camasDobles": 1,
+    "horasMinimas": 6,
+    "precioMinimo": 100,
+    "precio12Horas": 150,
+    "precio24Horas": 220,
+    "precioHoraExtra": 25,
+    "estadoActual": "SUCIO"
+  }
+]

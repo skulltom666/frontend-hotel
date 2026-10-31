@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: 'https://backend-sistema-hotel.onrender.com',
+  BASE_URL: 'http://localhost:8080',
   
   ENDPOINTS: {
     AUTH: {

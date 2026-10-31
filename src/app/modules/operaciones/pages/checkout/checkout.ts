@@ -75,11 +75,16 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(`${API_CONFIG.BASE_URL}/api/operaciones/${this.idHabitacion}/check-out`, payload, {
         headers,
+        responseType: 'text',
       })
       .subscribe({
         next: () => {
           // Si Java dice OK, descargamos el PDF y nos vamos
-          this.generarBoletaPDF();
+          try {
+            this.generarBoletaPDF();
+          } catch (e) {
+            console.warn('Advertencia al generar la boleta PDF:', e);
+          }
           alert('✅ Pago registrado y Check-Out exitoso. Habitación en limpieza.');
           this.router.navigate(['/gestion-pisos']);
         },
@@ -139,7 +144,8 @@ export class CheckoutComponent implements OnInit {
     });
 
     // Totales Finales
-    const finalY = (doc as any).lastAutoTable.finalY + 10;
+    const lastY = (doc as any).lastAutoTable?.finalY ?? 130;
+    const finalY = lastY + 10;
     doc.setFontSize(10);
     doc.text(`Total Bruto: S/ ${this.datos.totalAPagar.toFixed(2)}`, 140, finalY);
     doc.text(`Adelanto: S/ ${this.datos.adelanto.toFixed(2)}`, 140, finalY + 5);

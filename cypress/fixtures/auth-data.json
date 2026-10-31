@@ -1,0 +1,11 @@
+{
+  "token": "fake-jwt-token-hotel-123456",
+  "nombre": "Administrador Principal",
+  "rol": "ADMINISTRADOR",
+  "hoteles": [
+    {
+      "id": 1,
+      "nombre": "Hotel Central Plaza"
+    }
+  ]
+}

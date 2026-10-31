@@ -1,0 +1,22 @@
+{
+  "habitacion": {
+    "id": 102,
+    "numero": "102",
+    "hotel": {
+      "nombre": "Hotel Central Plaza",
+      "ruc": "20601234567",
+      "direccion": "Av. Principal 456, Lima"
+    }
+  },
+  "huesped": {
+    "dni": "72345678",
+    "nombres": "Carlos",
+    "apellidos": "Ramírez Silva"
+  },
+  "fechaIngreso": "2026-10-27T08:00:00.000Z",
+  "fechaSalida": "2026-10-27T15:00:00.000Z",
+  "horasTotales": 7,
+  "totalAPagar": 100.0,
+  "adelanto": 30.0,
+  "saldoPendiente": 70.0
+}
